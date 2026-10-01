@@ -1,0 +1,36 @@
+services:
+  app:
+    build: .
+    ports:
+      - "8083:80"
+    env_file:
+      - .env
+    environment:
+      PGHOST: database
+      PGPORT: 5432
+      PGUSER: paging
+      PGPASSWORD: paging
+      PGDATABASE: paging
+    depends_on:
+      database:
+        condition: service_healthy
+
+  database:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: paging
+      POSTGRES_USER: paging
+      POSTGRES_PASSWORD: paging
+    ports:
+      - "5435:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./paginacion.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U paging -d paging"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  postgres_data:
