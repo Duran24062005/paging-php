@@ -1,0 +1,78 @@
+* {
+    margin: 0;
+    padding: 0;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+body {
+    background-image: linear-gradient(to bottom, #c9c9c9, #f2f2f2);
+    color: #2e2e2e;
+    font-family: Arial, sans-serif;
+    padding: 3rem;
+}
+
+.contenedor {
+    width: 70%;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+h1 {
+    margin: 20px 0;
+    text-align: center;
+    font-family: "Oswald", Arial, Helvetica, sans-serif;
+    color: #da810d;
+    font-weight: normal;
+}
+
+.contenedor .articulos {
+    margin-bottom: 20px;
+}
+
+.contenedor .articulos ul {
+    list-style: none;
+}
+
+.contenedor .articulos ul li {
+    padding: 15px 10px;
+    border-bottom: 1px solid #c8c8c8;
+}
+
+.paginacion ul {
+    list-style: none;
+    text-align: center;
+    padding: 0;
+}
+
+.paginacion ul li {
+    display: inline-block;
+    margin: 5px;
+}
+
+.paginacion ul li a {
+    display: block;
+    padding: 10px 20px;
+    background-color: #000;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 3px;
+}
+
+.paginacion ul li a:hover {
+    background-color: #df770f;
+}
+
+.paginacion ul .disabled a {
+    background-color: #c8c8c8;
+    color: #fff;
+    cursor: not-allowed;
+    pointer-events: none; /* Prevents hover and click */
+    border-radius: 3px;
+}
+
+.paginacion ul .active a {
+    background-color: #df770f;
+    color: #fff;
+}
