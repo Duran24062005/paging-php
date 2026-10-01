@@ -1,31 +1,4 @@
--- Proyecto: 02-paginacion
--- Base esperada por el codigo: prueba_d
-
-CREATE DATABASE IF NOT EXISTS `prueba_d`
-  CHARACTER SET utf8mb4
-  COLLATE utf8mb4_unicode_ci;
-
-USE `prueba_d`;
-
-CREATE TABLE IF NOT EXISTS `informacion` (
-  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `info` VARCHAR(255) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-INSERT INTO `informacion` (`id`, `info`) VALUES
-  (1, 'Introduccion a PHP'),
-  (2, 'Variables y tipos de datos'),
-  (3, 'Condicionales en PHP'),
-  (4, 'Bucles y estructuras de control'),
-  (5, 'Funciones reutilizables'),
-  (6, 'Arreglos indexados'),
-  (7, 'Arreglos asociativos'),
-  (8, 'Manejo de formularios'),
-  (9, 'Validacion de datos'),
-  (10, 'Paginacion con MySQL'),
-  (11, 'Conexiones PDO'),
-  (12, 'Consultas preparadas'),
-  (13, 'Seguridad basica'),
-  (14, 'Organizacion de vistas'),
-  (15, 'Buenas practicas en PHP');
+-- PostgreSQL. Ejecutar dentro de la base definida por DATABASE_URL.
+CREATE TABLE IF NOT EXISTS informacion (id BIGSERIAL PRIMARY KEY, info VARCHAR(255) NOT NULL);
+INSERT INTO informacion (info) VALUES
+('Introduccion a PHP'),('Variables y tipos de datos'),('Condicionales en PHP'),('Bucles y estructuras de control'),('Funciones reutilizables'),('Arreglos indexados'),('Arreglos asociativos'),('Manejo de formularios'),('Validacion de datos'),('Paginacion con PostgreSQL'),('Conexiones PDO'),('Consultas preparadas'),('Seguridad basica'),('Organizacion de vistas'),('Buenas practicas en PHP');

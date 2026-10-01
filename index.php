@@ -1,42 +1,5 @@
 <?php
-
-try {
-    //code...
-    $DB = new PDO('mysql:host=localhost;dbname=prueba_d', 'alexidg', '12345');
-
-} catch (PDOException $e) {
-    //throw $th;
-    echo "Error de conexión: " . $e->getMessage();
-    die();
-}
-
-$pagina = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1; 
-$por_pagina = 5;
-
-$inicio = ($pagina > 1) ? ($pagina *  $por_pagina) - $por_pagina : 0;
-
-$articulos = $DB->prepare("SELECT SQL_CALC_FOUND_ROWS * FROM informacion
-LIMIT $inicio, $por_pagina
-");
-$articulos->execute();
-$articulos = $articulos->fetchAll();
-
-// echo '<pre>';
-// print_r($articulos);
-// echo '</pre>';
-
-if (!$articulos) {
-    # code...
-    header('Location: http://localhost/Udemy_Php/practica/paginacion/index.php');
-}
-
-$totalArticulos = $DB->query('SELECT FOUND_ROWS() as total');
-$totalArticulos = $totalArticulos->fetch()['total'];
-// echo $totalArticulos;
-
-$numeroPaginas = ceil($totalArticulos / $por_pagina);
-// echo $numeroPaginas;
-
-
-require 'index.view.php';
-?>
+declare(strict_types=1);
+$url=(string)(getenv('DATABASE_URL')?:getenv('POSTGRES_URL')?:'');
+try{$p=parse_url($url);if(!$p||empty($p['host']))throw new RuntimeException('Configura DATABASE_URL.');$q=[];parse_str($p['query']??'',$q);$DB=new PDO('pgsql:host='.$p['host'].';port='.($p['port']??5432).';dbname='.ltrim($p['path']??'','/').';sslmode='.($q['sslmode']??'require'),urldecode($p['user']??''),urldecode($p['pass']??''),[PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION,PDO::ATTR_DEFAULT_FETCH_MODE=>PDO::FETCH_ASSOC]);}catch(Throwable $e){error_log($e->getMessage());http_response_code(503);exit('Error de conexión con PostgreSQL. Revisa DATABASE_URL y que la tabla informacion exista.');}
+$pagina=max(1,(int)($_GET['pagina']??1));$por_pagina=5;$totalArticulos=(int)$DB->query('SELECT COUNT(*) FROM informacion')->fetchColumn();$numeroPaginas=max(1,(int)ceil($totalArticulos/$por_pagina));$pagina=min($pagina,$numeroPaginas);$s=$DB->prepare('SELECT id,info FROM informacion ORDER BY id LIMIT :lim OFFSET :off');$s->bindValue(':lim',$por_pagina,PDO::PARAM_INT);$s->bindValue(':off',($pagina-1)*$por_pagina,PDO::PARAM_INT);$s->execute();$articulos=$s->fetchAll();require __DIR__.'/index.view.php';
